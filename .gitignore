@@ -1,0 +1,12 @@
+# Dependency directory
+node_modules/
+npm-debug.log
+
+# Miscellaneous
+#*.sw*
+#*~
+#bin/
+#vendor/
+.DS_Store
+*.DS_Store
+dist/

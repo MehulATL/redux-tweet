@@ -1,0 +1,37 @@
+{
+  "name": "redux-tweet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "actions.js",
+  "scripts": {
+    "start": "webpack-dev-server --progress --colors",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mayho/redux-tweet.git"
+  },
+  "keywords": [],
+  "author": "Mehul Patel <mehul8@gmail.com> (http://mehul.codes/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mayho/redux-tweet/issues"
+  },
+  "homepage": "https://github.com/Mayho/redux-tweet#readme",
+  "dependencies": {
+    "react": "15.3.0",
+    "react-dom": "15.3.0"
+  },
+  "devDependencies": {
+    "babel-core": "6.13.2",
+    "babel-loader": "6.2.4",
+    "babel-preset-es2015": "6.13.2",
+    "babel-preset-react": "6.11.1",
+    "babel-preset-stage-0": "6.5.0",
+    "css-loader": "0.23.1",
+    "html-webpack-plugin": "2.22.0",
+    "style-loader": "0.13.1",
+    "webpack": "1.13.1",
+    "webpack-dev-server": "1.14.1"
+  }
+}
