@@ -2,7 +2,7 @@
   "name": "redux-tweet",
   "version": "1.0.0",
   "description": "",
-  "main": "actions.js",
+  "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --progress --colors",
     "production": "webpack -p",
