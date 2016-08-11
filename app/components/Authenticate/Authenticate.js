@@ -5,7 +5,7 @@ import { centeredContainer, largeHeader, errorMsg } from 'sharedStyles/styles.cs
 const Authenticate = ({error, isFetching, onAuth}) => {
   return (
     <div className={centeredContainer}>
-      <h1 className={largeHeader}>{'Authenticate'}</h1>
+      <p className={largeHeader}>{'Authenticate'}</p>
       <FacebookAuthButton isFetching={isFetching} onAuth={onAuth} />
       {error ? <p className={errorMsg}>{error}</p> : null}
     </div>
