@@ -56,7 +56,7 @@ In the project directory, you can run:
 Runs the app in the development mode.<br>
 Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 
-The page will reload if you make edits.<br>
+Development mode includes hot model reloading, and will maintain app state when you make changes to your code, while updating your componenets in browser.<br>
 
 ### `npm run production`
 
