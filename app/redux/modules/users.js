@@ -1,4 +1,4 @@
-import auth from 'helpers/auth'
+import auth, { logout } from 'helpers/auth'
 
 // use consts for action types
 // incase we need to export to use in other reducers
@@ -45,13 +45,20 @@ function fetchingUserSuccess (uid, user, timestamp) {
 }
 
 export function fetchAndHandleUserAuth () {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(fetchingUser())
     return auth().then(user => {
       dispatch(fetchingUserSuccess(user.uid, user, Date.now()))
       dispatch(authUser(user.uid))
     })
     .catch(err => dispatch(fetchingUserFailure(err)))
+  }
+}
+
+export function logoutAndUnauth () {
+  return function (dispatch) {
+    logout()
+    dispatch(unauthUser())
   }
 }
 
