@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  color: #4a90e2;
+  font-weight: 100;
+  font-size: 100px;
+  margin-bottom: 20px
+}
+
+.slogan {
+  color: #4a90e2;
+  font-weight: 100;
+  font-size: 25px;
+  text-align: center;
+  line-height: 55px;
+}
