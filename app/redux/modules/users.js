@@ -1,4 +1,5 @@
-import auth, { logout } from 'helpers/auth'
+import auth, { logout, saveUser } from 'helpers/auth'
+import { formatUserInfo } from 'helpers/utils'
 
 // use consts for action types
 // incase we need to export to use in other reducers
@@ -7,23 +8,24 @@ const UNAUTH_USER = 'UNAUTH_USER'
 const FETCHING_USER = 'FETCHING_USER'
 const FETCHING_USER_FAILURE = 'FETCHING_USER_FAILURE'
 const FETCHING_USER_SUCCESS = 'FETCHING_USER_SUCCESS'
+const STOP_FETCHING_USER = 'STOP_FETCHING_USER'
 
-function authUser (uid) {
+export function authUser (uid) {
   return {
     type: AUTH_USER,
-    uid,
+    uid
   }
 }
 
 function unauthUser () {
   return {
-    type: UNAUTH_USER,
+    type: UNAUTH_USER
   }
 }
 
 function fetchingUser () {
   return {
-    type: FETCHING_USER,
+    type: FETCHING_USER
   }
 }
 
@@ -31,26 +33,29 @@ function fetchingUserFailure (error) {
   console.warn(error)
   return {
     type: FETCHING_USER_FAILURE,
-    error: 'Error fetching user.',
+    error: 'Error fetching user.'
   }
 }
 
-function fetchingUserSuccess (uid, user, timestamp) {
+export function fetchingUserSuccess (uid, user, timestamp) {
   return {
     type: FETCHING_USER_SUCCESS,
     uid,
     user,
-    timestamp,
+    timestamp
   }
 }
 
 export function fetchAndHandleUserAuth () {
   return function (dispatch) {
     dispatch(fetchingUser())
-    return auth().then(user => {
-      dispatch(fetchingUserSuccess(user.uid, user, Date.now()))
-      dispatch(authUser(user.uid))
+    return auth().then(({user, credential}) => {
+      const userData = user.providerData[0]
+      const userInfo = formatUserInfo(userData.displayName, userData.photoURL, user.uid)
+      return dispatch(fetchingUserSuccess(user.uid, userInfo, Date.now()))
     })
+    .then(({user}) => saveUser(user))
+    .then(user => dispatch(authUser(user.uid)))
     .catch(err => dispatch(fetchingUserFailure(err)))
   }
 }
@@ -62,13 +67,19 @@ export function logoutAndUnauth () {
   }
 }
 
+export function stopFetchingUser () {
+  return {
+    type: STOP_FETCHING_USER
+  }
+}
+
 const initialUserState = {
   lastUpdated: 0,
   info: {
     name: '',
     uid: '',
-    avatar: '',
-  },
+    avatar: ''
+  }
 }
 
 function user (state = initialUserState, action) {
@@ -77,7 +88,7 @@ function user (state = initialUserState, action) {
       return {
         ...state,
         info: action.user,
-        lastUpdated: action.timestamp,
+        lastUpdated: action.timestamp
       }
     default :
       return state
@@ -85,10 +96,10 @@ function user (state = initialUserState, action) {
 }
 
 const initialState = {
-  isFetching: false,
+  isFetching: true,
   error: '',
   isAuthed: false,
-  authedId: '',
+  authedId: ''
 }
 
 export default function users (state = initialState, action) {
@@ -97,38 +108,43 @@ export default function users (state = initialState, action) {
       return {
         ...state,
         isAuthed: true,
-        authedId: action.uid,
+        authedId: action.uid
       }
     case UNAUTH_USER :
       return {
         ...state,
         isAuthed: false,
-        authedId: '',
+        authedId: ''
       }
     case FETCHING_USER:
       return {
         ...state,
-        isFetching: true,
+        isFetching: true
       }
     case FETCHING_USER_FAILURE:
       return {
         ...state,
         isFetching: false,
-        error: action.error,
+        error: action.error
       }
     case FETCHING_USER_SUCCESS:
       return action.user === null
         ? {
           ...state,
           isFetching: false,
-          error: '',
+          error: ''
         }
         : {
           ...state,
           isFetching: false,
           error: '',
-          [action.uid]: user(state[action.uid], action),
+          [action.uid]: user(state[action.uid], action)
         }
+    case STOP_FETCHING_USER:
+      return {
+        ...state,
+        isFetching: false
+      }
     default :
       return state
   }
