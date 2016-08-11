@@ -10,8 +10,13 @@ const AuthenticateContainer = React.createClass({
     isFetching: PropTypes.bool.isRequired,
     fetchAndHandleUserAuth: PropTypes.func.isRequired
   },
-  handleAuth () {
+  contextTypes: {
+    router: PropTypes.object.isRequired
+  },
+  handleAuth (e) {
+    e.preventDefault()
     this.props.fetchAndHandleUserAuth()
+      .then(() => this.context.router.replace('timeline'))
   },
   render () {
     return (
