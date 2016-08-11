@@ -9,3 +9,8 @@ export default function auth () {
     }, 2000)
   })
 }
+
+export function checkIfAuthed(store) {
+  // TODO: use Firebase for auth
+  return store.getState().isAuthed
+}
