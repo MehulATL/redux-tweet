@@ -50,11 +50,12 @@ export function setAndHandleTimelineListener () {
     dispatch(addListener('timeline'))
     dispatch(settingTimelineListener())
 
-    listenToTimeline(({feed, sortedIds}) => {
+    listenToTimeline(({timeline, sortedIds}) => {
       dispatch(addMultipleTweets(timeline))
       initialFetch
         ? dispatch(settingTimelineListenerSuccess(sortedIds))
         : dispatch(addNewTweetIdToTimeline(sortedIds[0]))
+      initialFetch = false
     }, (err) => dispatch(settingTimelineListenerError(err)))
   }
 }
