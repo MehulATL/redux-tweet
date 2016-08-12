@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
+import { ModalContainer } from 'containers'
 import { container, navContainer, link } from './styles.css'
 
 const NavLinks = ({isAuthed}) => {
-  return isAuthed === true
+  return isAuthed
     ? <ul>
         <li><Link className={link} to='/'>{'Home'}</Link></li>
       </ul>
@@ -11,9 +12,9 @@ const NavLinks = ({isAuthed}) => {
 }
 
 const ActionLinks = ({isAuthed}) => {
-  return isAuthed === true
+  return isAuthed
     ? <ul>
-        <li>{'New Tweet'}</li>
+        <li><ModalContainer /></li>
         <li><Link className={link} to='/logout'>{'Logout'}</Link></li>
       </ul>
     : <ul>

@@ -9,7 +9,7 @@ process.env.BABEL_ENV = LAUNCH_COMMAND
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
-  build: path.join(__dirname, 'dist'),
+  build: path.join(__dirname, 'dist')
 }
 
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -49,7 +49,7 @@ const developmentConfig = {
     contentBase: PATHS.build,
     hot: true,
     inline: true,
-    progress: true,
+    progress: true
   },
   plugins: [HTMLWebpackPluginConfig, new webpack.HotModuleReplacementPlugin()]
 }
