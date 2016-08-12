@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { newTweetContainer, header } from './styles.css'
-// import { TweetContainer } from 'containers'
+import { TweetContainer } from 'containers'
 import { errorMsg } from 'sharedStyles/styles.css'
 
 NewTweetsAvailable.propTypes = {
@@ -32,7 +32,7 @@ export default function Timeline (props) {
             ? <p className={header}>{'This is unfortunate.'} <br /> {'It appears there are no tweets yet 😞'}</p>
             : null}
         {props.tweetIds.map((id) => (
-          <p key={id}>{'Tweet Id: '} {id}</p>
+          <TweetContainer tweetId={id} key={id} />
         ))}
         {props.error ? <p className={errorMsg}>{props.error}</p> : null}
       </div>
