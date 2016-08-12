@@ -1,14 +1,13 @@
 import React, { PropTypes } from 'react'
 import { default as ReactModal } from 'react-modal'
+import { formatTweet } from 'helpers/utils'
 import {
   newTweetTop, pointer, newTweetInputContainer,
   newTweetInput, submitTweetBtn, darkBtn } from './styles.css'
 
 const Modal = (props) => {
-
   const submitTweet = () => {
-    console.log('Tweet', props.tweetText)
-    console.log('User', props.user)
+    props.tweetFanout(formatTweet(props.tweetText, props.user))
   }
 
   return (
@@ -57,7 +56,8 @@ Modal.propTypes = {
   isSubmitDisabled: bool.isRequired,
   openModal: func.isRequired,
   closeModal: func.isRequired,
-  updateTweetText: func.isRequired
+  updateTweetText: func.isRequired,
+  tweetFanout: func.isRequired
 }
 
 export default Modal

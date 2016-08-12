@@ -2,6 +2,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Modal } from 'components'
 import * as modalActionCreators from 'redux/modules/modal'
+import * as tweetsActionCreators from 'redux/modules/tweets'
 
 /*
   we aren't using a ModalContainer component and exporting the high-order component
@@ -20,7 +21,7 @@ function mapStateToProps ({modal, users}, props) {
   }
 }
 function mapDispatchToProps (dispatch, props) {
-  return bindActionCreators(modalActionCreators, dispatch)
+  return bindActionCreators({...modalActionCreators, ...tweetsActionCreators}, dispatch)
 }
 
 export default connect(
