@@ -43,7 +43,7 @@ function addTweet (tweet) {
   }
 }
 
-function addMultipleTweets (tweets) {
+export function addMultipleTweets (tweets) {
   return {
     type: ADD_MULTIPLE_TWEETS,
     tweets

@@ -1,3 +1,7 @@
+import { addListener } from 'redux/modules/listeners'
+import { listenToTimeline } from 'helpers/api'
+import { addMultipleTweets } from 'redux/modules/tweets'
+
 const SETTING_TIMELINE_LISTENER = 'SETTING_TIMELINE_LISTENER'
 const SETTING_TIMELINE_LISTENER_ERROR = 'SETTING_TIMELINE_LISTENER_ERROR'
 const SETTING_TIMELINE_LISTENER_SUCCESS = 'SETTING_TIMELINE_LISTENER_SUCCESS'
@@ -35,6 +39,23 @@ function addNewTweetIdToTimeline (tweetId) {
 export function resetNewTweetsAvailable () {
   return {
     type: RESET_NEW_TWEETS_AVAILABLE
+  }
+}
+
+export function setAndHandleTimelineListener () {
+  let initialFetch = true
+  return function (dispatch, getState) {
+    if (getState().listeners.timeline) return
+
+    dispatch(addListener('timeline'))
+    dispatch(settingTimelineListener())
+
+    listenToTimeline(({feed, sortedIds}) => {
+      dispatch(addMultipleTweets(timeline))
+      initialFetch
+        ? dispatch(settingTimelineListenerSuccess(sortedIds))
+        : dispatch(addNewTweetIdToTimeline(sortedIds[0]))
+    }, (err) => dispatch(settingTimelineListenerError(err)))
   }
 }
 

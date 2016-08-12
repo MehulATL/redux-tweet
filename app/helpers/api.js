@@ -31,3 +31,11 @@ export function saveTweet (tweet) {
     saveLikeCount(tweetId)
   ]).then(() => ({...tweet, tweetId}))
 }
+
+export function listenToTimeline (cb, errCb) {
+  ref.child('tweets').on('value', (snapshot) => {
+    const timeline = snapshot.val() || {}
+    const sortedIds = Object.keys(timeline).sort((a, b) => timeline[b].timestamp - timeline[a].timestamp)
+    cb({timeline, sortedIds})
+  }, errCb)
+}
