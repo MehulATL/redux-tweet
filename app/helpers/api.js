@@ -39,3 +39,28 @@ export function listenToTimeline (cb, errCb) {
     cb({timeline, sortedIds})
   }, errCb)
 }
+
+export function fetchUsersLikes (uid) {
+  return ref.child(`usersLikes/${uid}`).once('value')
+    .then((snapshot) => snapshot.val() || {})
+}
+
+export function saveToUsersLikes (uid, tweetId) {
+  return ref.child(`usersLikes/${uid}/${tweetId}`)
+    .set(true)
+}
+
+export function deleteFromUsersLikes (uid, tweetId) {
+  return ref.child(`usersLikes/${uid}/${tweetId}`)
+    .set(false)
+}
+
+export function incrementLikeCount (tweetId) {
+  return ref.child(`likeCount/${tweetId}`)
+    .transaction((currentVal = 0) => currentVal++)
+}
+
+export function decrementLikeCount (tweetId) {
+  return ref.child(`likeCount/${tweetId}`)
+    .transaction((currentVal = 0) => currentVal--)
+}

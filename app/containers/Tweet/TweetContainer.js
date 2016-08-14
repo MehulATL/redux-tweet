@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Tweet } from 'components'
+import * as usersLikesActions from 'redux/modules/usersLikes'
+
 const { func, object, bool, number } = PropTypes
 
 const TweetContainer = React.createClass({
@@ -51,4 +54,8 @@ function mapStateToProps ({tweets, likeCount, usersLikes}, props) {
   }
 }
 
-export default connect(mapStateToProps)(TweetContainer)
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators(usersLikesActions, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TweetContainer)
