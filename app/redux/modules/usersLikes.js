@@ -69,10 +69,21 @@ export function handleDeleteLike (tweetId, e) {
     Promise.all([
       deleteFromUsersLikes(uid, tweetId),
       decrementLikeCount(tweetId)
-    ]).catch((err) => {
-      console.warn(err)
-      dispatch(addLike(tweetId))
-    })
+    ])
+      .catch((error) => {
+        console.warn(error)
+        dispatch(addLike(tweetId))
+      })
+  }
+}
+
+export function setUsersLikes () {
+  return function (dispatch, getState) {
+    const uid = getState().users.authedId
+    dispatch(fetchingLikes())
+    fetchUsersLikes(uid)
+      .then((likes) => dispatch(fetchingLikesSuccess(likes)))
+      .catch((err) => dispatch(fetchLikesError(err)))
   }
 }
 
