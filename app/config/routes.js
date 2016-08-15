@@ -6,7 +6,8 @@ import {
   AuthenticateContainer,
   TimelineContainer,
   LogoutContainer,
-  UserContainer
+  UserContainer,
+  TweetDetailsContainer
 } from 'containers'
 
 export default function getRoutes (checkAuth) {
@@ -16,7 +17,8 @@ export default function getRoutes (checkAuth) {
         <Route path='auth' component={AuthenticateContainer} onEnter={checkAuth} />
         <Route path='timeline' component={TimelineContainer} onEnter={checkAuth} />
         <Route path='logout' component={LogoutContainer} />
-        <Route path='/:uid' component={UserContainer} />
+          <Route path='/:uid' component={UserContainer} onEnter={checkAuth} />
+        <Route path='/tweetDetail/:tweetId' component={TweetDetailsContainer} onEnter={checkAuth} />
         <IndexRoute component={HomeContainer} onEnter={checkAuth} />
       </Router>
     </Router>

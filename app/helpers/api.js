@@ -55,12 +55,12 @@ export function deleteFromUsersLikes (uid, tweetId) {
 
 export function incrementLikeCount (tweetId) {
   return ref.child(`likeCount/${tweetId}`)
-    .transaction((currentVal = 0) => currentVal++)
+    .transaction((currentVal = 0) => currentVal + 1)
 }
 
 export function decrementLikeCount (tweetId) {
   return ref.child(`likeCount/${tweetId}`)
-    .transaction((currentVal = 0) => currentVal--)
+    .transaction((currentVal = 0) => currentVal - 1)
 }
 
 export function fetchUser (uid) {
