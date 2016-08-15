@@ -24,7 +24,7 @@ const MainContainer = React.createClass({
     firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
         const userData = user.providerData[0]
-        const userInfo = formatUserInfo(userData.displayName, userData.photoURL, userData.uid)
+        const userInfo = formatUserInfo(userData.displayName, userData.photoURL, user.uid)
         this.props.authUser(user.uid)
         this.props.fetchingUserSuccess(user.uid, userInfo, Date.now())
         this.props.setUsersLikes()
