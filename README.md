@@ -1,5 +1,4 @@
 # Redux-Tweet
-WORK-IN-PROGRESS
 Twitter clone built in react, redux, firebase, and webpack.
 
 ## Folder Structure
@@ -22,25 +21,46 @@ redux-tweet/
       FacebookAuthButton/
       Home/
       Logout/
+      Modal/
       Navigation/
+      Replies/
       Timeline/
+      Tweet/
+      TweetDetails/
+      User/
       index.js
     config/
       constants.js
       routes.js
     containers/
       Autheniticate/
+      FacebookAuthButton/
       Home/
       Logout/
-      Main/
+      Modal/
+      Navigation/
+      Replies/
       Timeline/
+      Tweet/
+      TweetDetails/
+      User/
       index.js
     helpers/
+      api.js
       auth.js
       utils.js
     redux/
       modules/
+        index.js
+        likeCount.js
+        listeners.js
+        modal.js
+        replies.js
+        timeline.js
+        tweets.js
         users.js
+        usersLikes.js
+        usersTweets.js
     sharedStyles/
       styles.css
     index.html
@@ -73,3 +93,6 @@ Runs the source code through eslint, which can be configured in the top-level .e
 ### `npm run fix`
 
 Will attempt to fix linting errors automatically.
+
+## TODO
+Refactor to use immutable.js
