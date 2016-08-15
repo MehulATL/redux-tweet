@@ -11,3 +11,6 @@ firebase.initializeApp(config)
 
 export const ref = firebase.database().ref()
 export const firebaseAuth = firebase.auth
+
+export const usersTweetsExpirationTime = 100000
+export const userExpirationTime = 100000

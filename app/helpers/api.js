@@ -1,11 +1,9 @@
 import { ref } from 'config/constants'
 
 function saveToTweets (tweet) {
-  // We're generating the tweetId by pushing nothing to firebase, and returning the key
   const tweetId = ref.child('tweets').push().key
   const tweetPromise = ref.child(`tweets/${tweetId}`)
     .set({...tweet, tweetId})
-
   return {
     tweetId,
     tweetPromise
@@ -52,7 +50,7 @@ export function saveToUsersLikes (uid, tweetId) {
 
 export function deleteFromUsersLikes (uid, tweetId) {
   return ref.child(`usersLikes/${uid}/${tweetId}`)
-    .set(false)
+    .set(null)
 }
 
 export function incrementLikeCount (tweetId) {
@@ -63,4 +61,14 @@ export function incrementLikeCount (tweetId) {
 export function decrementLikeCount (tweetId) {
   return ref.child(`likeCount/${tweetId}`)
     .transaction((currentVal = 0) => currentVal--)
+}
+
+export function fetchUser (uid) {
+  return ref.child(`users/${uid}`).once('value')
+  .then((snapshot) => snapshot.val())
+}
+
+export function fetchUserTweets (uid) {
+  return ref.child(`usersTweets/${uid}`).once('value')
+    .then((snapshot) => snapshot.val() || {})
 }

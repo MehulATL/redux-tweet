@@ -1,3 +1,6 @@
+import { fetchUserTweets } from 'helpers/api'
+import { addMultipleTweets } from './tweets'
+
 const FETCHING_USERS_TWEETS = 'FETCHING_USERS_TWEETS'
 const FETCHING_USERS_TWEETS_ERROR = 'FETCHING_USERS_TWEETS_ERROR'
 const FETCHING_USERS_TWEETS_SUCCESS = 'FETCHING_USERS_TWEETS_SUCCESS'
@@ -32,6 +35,23 @@ export function addSingleUsersTweet (uid, tweetId) {
     type: ADD_SINGLE_USERS_TWEET,
     uid,
     tweetId
+  }
+}
+
+export function fetchAndHandleUserTweets (uid) {
+  return function (dispatch) {
+    dispatch(fetchingUsersTweets())
+
+    fetchUserTweets(uid)
+      .then(tweets => dispatch(addMultipleTweets(tweets)))
+      .then(({tweets}) => dispatch(
+        fetchingUsersTweetsSuccess(
+          uid,
+          Object.keys(tweets).sort((a, b) => tweets[b].timestamp - tweets[a].timestamp),
+          Date.now()
+        )
+      ))
+      .catch(err => dispatch(fetchingUsersTweetsError(err)))
   }
 }
 

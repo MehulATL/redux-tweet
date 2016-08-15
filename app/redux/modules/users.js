@@ -1,8 +1,7 @@
 import auth, { logout, saveUser } from 'helpers/auth'
 import { formatUserInfo } from 'helpers/utils'
+import { fetchUser } from 'helpers/api'
 
-// use consts for action types
-// incase we need to export to use in other reducers
 const AUTH_USER = 'AUTH_USER'
 const UNAUTH_USER = 'UNAUTH_USER'
 const FETCHING_USER = 'FETCHING_USER'
@@ -57,6 +56,15 @@ export function fetchAndHandleUserAuth () {
     .then(({user}) => saveUser(user))
     .then(user => dispatch(authUser(user.uid)))
     .catch(err => dispatch(fetchingUserFailure(err)))
+  }
+}
+
+export function fetchAndHandleUser (uid) {
+  return function (dispatch) {
+    dispatch(fetchingUser())
+    return fetchUser(uid)
+      .then(user => dispatch(fetchingUserSuccess(uid, user, Date.now())))
+      .catch(err => dispatch(fetchingUserFailure(err)))
   }
 }
 
