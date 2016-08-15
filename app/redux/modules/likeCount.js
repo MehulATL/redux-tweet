@@ -1,3 +1,4 @@
+import { fetchLikeCount } from 'helpers/api'
 import { ADD_LIKE, REMOVE_LIKE } from './usersLikes'
 const FETCHING_COUNT = 'FETCHING_COUNT'
 const FETCHING_COUNT_ERROR = 'FETCHING_COUNT_ERROR'
@@ -22,6 +23,15 @@ function fetchingCountSuccess (tweetId, count) {
     type: FETCHING_COUNT_SUCCESS,
     tweetId,
     count
+  }
+}
+
+export function initLikeFetch (tweetId) {
+  return function (dispatch) {
+    dispatch(fetchingCount())
+    fetchLikeCount(tweetId)
+      .then(count => dispatch(fetchingCountSuccess(tweetId, count)))
+      .catch(err => dispatch(fetchingCountError(err)))
   }
 }
 

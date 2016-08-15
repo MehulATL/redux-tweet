@@ -40,7 +40,7 @@ export function listenToTimeline (cb, errCb) {
 
 export function fetchUsersLikes (uid) {
   return ref.child(`usersLikes/${uid}`).once('value')
-    .then((snapshot) => snapshot.val() || {})
+    .then(snapshot => snapshot.val() || {})
 }
 
 export function saveToUsersLikes (uid, tweetId) {
@@ -65,10 +65,20 @@ export function decrementLikeCount (tweetId) {
 
 export function fetchUser (uid) {
   return ref.child(`users/${uid}`).once('value')
-  .then((snapshot) => snapshot.val())
+  .then(snapshot => snapshot.val())
 }
 
 export function fetchUserTweets (uid) {
   return ref.child(`usersTweets/${uid}`).once('value')
-    .then((snapshot) => snapshot.val() || {})
+    .then(snapshot => snapshot.val() || {})
+}
+
+export function fetchTweet (tweetId) {
+  return ref.child(`tweets/${tweetId}`).once('value')
+    .then(snapshot => snapshot.val())
+}
+
+export function fetchLikeCount (tweetId) {
+  return ref.child(`likeCount/${tweetId}`).once('value')
+    .then(snapshot => snapshot.val() || 0)
 }

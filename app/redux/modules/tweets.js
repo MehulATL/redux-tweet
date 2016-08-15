@@ -1,4 +1,4 @@
-import { saveTweet } from 'helpers/api'
+import { saveTweet, fetchTweet } from 'helpers/api'
 import { closeModal } from './modal'
 import { addSingleUsersTweet } from './usersTweets'
 
@@ -7,7 +7,7 @@ const FETCHING_TWEET_ERROR = 'FETCHING_TWEET_ERROR'
 const FETCHING_TWEET_SUCCESS = 'FETCHING_TWEET_SUCCESS'
 const ADD_TWEET = 'ADD_TWEET'
 const ADD_MULTIPLE_TWEETS = 'ADD_MULTIPLE_TWEETS'
-const REMOVE_FETCHING = 'REMOVE_FETCHING'
+const STOP_FETCHING = 'STOP_FETCHING'
 
 function fetchingTweet () {
   return {
@@ -30,9 +30,9 @@ function fetchingTweetSuccess (tweet) {
   }
 }
 
-function removeFetching () {
+export function stopFetching () {
   return {
-    type: REMOVE_FETCHING
+    type: STOP_FETCHING
   }
 }
 
@@ -65,6 +65,15 @@ export function tweetFanout (tweet) {
   }
 }
 
+export function fetchAndHandleTweet (tweetId) {
+  return function (dispatch, getState) {
+    dispatch(fetchingTweet())
+    fetchTweet(tweetId)
+      .then(tweet => dispatch(fetchingTweetSuccess(tweet)))
+      .catch(err => dispatch(fetchingTweetError(err)))
+  }
+}
+
 const initialState = {
   isFetching: true,
   error: ''
@@ -91,7 +100,7 @@ export default function tweets (state = initialState, action) {
         isFetching: false,
         error: action.error
       }
-    case REMOVE_FETCHING :
+    case STOP_FETCHING :
       return {
         ...state,
         error: '',
