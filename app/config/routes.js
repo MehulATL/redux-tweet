@@ -1,5 +1,5 @@
 import React from 'react'
-import { Router, hashHistory, IndexRoute, Route } from 'react-router'
+import { Router, IndexRoute, Route } from 'react-router'
 import {
   MainContainer,
   HomeContainer,
@@ -10,9 +10,9 @@ import {
   TweetDetailsContainer
 } from 'containers'
 
-export default function getRoutes (checkAuth) {
+export default function getRoutes (checkAuth, history) {
   return (
-    <Router history={hashHistory}>
+    <Router history={history}>
       <Router path='/' component={MainContainer}>
         <Route path='auth' component={AuthenticateContainer} onEnter={checkAuth} />
         <Route path='timeline' component={TimelineContainer} onEnter={checkAuth} />
