@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { TweetDetails } from 'components'
 import * as tweetActionCreators from 'redux/modules/tweets'
 import * as likeCountActionCreators from 'redux/modules/likeCount'
+import * as repliesActionCreators from 'redux/modules/replies'
 
 const TweetDetailsContainer = React.createClass({
   propTypes: {
@@ -14,7 +15,8 @@ const TweetDetailsContainer = React.createClass({
     tweetAlreadyFetched: PropTypes.bool.isRequired,
     stopFetching: PropTypes.func.isRequired,
     fetchAndHandleTweet: PropTypes.func.isRequired,
-    initLikeFetch: PropTypes.func.isRequired
+    initLikeFetch: PropTypes.func.isRequired,
+    addAndHandleReply: PropTypes.func.isRequired
   },
   componentDidMount: function () {
     this.props.initLikeFetch(this.props.tweetId)
@@ -27,6 +29,7 @@ const TweetDetailsContainer = React.createClass({
   render () {
     return (
       <TweetDetails
+        addAndHandleReply={this.props.addAndHandleReply}
         authedUser={this.props.authedUser}
         tweetId={this.props.tweetId}
         isFetching={this.props.isFetching}
@@ -48,7 +51,8 @@ function mapStateToProps ({tweets, likeCount, users}, props) {
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     ...tweetActionCreators,
-    ...likeCountActionCreators
+    ...likeCountActionCreators,
+    ...repliesActionCreators
   }, dispatch)
 }
 

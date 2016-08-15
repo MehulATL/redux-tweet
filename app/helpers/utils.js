@@ -34,3 +34,13 @@ export function staleUser (timestamp) {
 export function staleTweets (timestamp) {
   return getMilliseconds(timestamp) > usersTweetsExpirationTime
 }
+
+export function formatReply ({name, avatar, uid}, reply) {
+  return {
+    name,
+    avatar,
+    uid,
+    reply,
+    timestamp: Date.now()
+  }
+}

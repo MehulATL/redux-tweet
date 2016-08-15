@@ -82,3 +82,15 @@ export function fetchLikeCount (tweetId) {
   return ref.child(`likeCount/${tweetId}`).once('value')
     .then(snapshot => snapshot.val() || 0)
 }
+
+export function postReply (tweetId, reply) {
+  const replyId = ref.child(`replies/${tweetId}`).push().key
+  const replyWithId = {...reply, replyId}
+  const replyPromise = ref.child(`replies/${tweetId}/${replyId}`)
+    .set(replyWithId)
+
+  return {
+    replyWithId,
+    replyPromise
+  }
+}
