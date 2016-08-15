@@ -29,6 +29,10 @@ html, body {
   line-height: 55px;
 }
 
+.center {
+  text-align: center;
+}
+
 .errorMsg {
   color: #FF7777;
   font-size: 22px;

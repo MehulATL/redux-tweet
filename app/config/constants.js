@@ -14,3 +14,4 @@ export const firebaseAuth = firebase.auth
 
 export const usersTweetsExpirationTime = 100000
 export const userExpirationTime = 100000
+export const repliesExpirationTime = 300000

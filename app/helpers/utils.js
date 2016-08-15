@@ -1,4 +1,8 @@
-import { userExpirationTime, usersTweetsExpirationTime } from 'config/constants'
+import {
+  userExpirationTime,
+  usersTweetsExpirationTime,
+  repliesExpirationTime
+} from 'config/constants'
 
 export function formatUserInfo (name, avatar, uid) {
   return {
@@ -33,6 +37,10 @@ export function staleUser (timestamp) {
 
 export function staleTweets (timestamp) {
   return getMilliseconds(timestamp) > usersTweetsExpirationTime
+}
+
+export function staleReplies (timestamp) {
+  return getMilliseconds(timestamp) > repliesExpirationTime
 }
 
 export function formatReply ({name, avatar, uid}, reply) {

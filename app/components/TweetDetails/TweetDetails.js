@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { TweetContainer } from 'containers'
+import { TweetContainer, RepliesContainer } from 'containers'
 import { formatReply } from 'helpers/utils'
 import {
   mainContainer, container, content, repliesContainer,
@@ -42,7 +42,7 @@ const TweetDetails = ({tweetId, authedUser, isFetching, error, addAndHandleReply
               <Reply submit={(replyText) => addAndHandleReply(tweetId, formatReply(authedUser, replyText))} />
             </div>
             <div className={repliesContainer}>
-              {'REPLY SECTION'}
+              <RepliesContainer tweetId={tweetId} />
             </div>
           </div>}
       {error ? <p className={errorMsg}>{error}</p> : null}

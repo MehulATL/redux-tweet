@@ -1,4 +1,4 @@
-import { postReply } from 'helpers/api'
+import { postReply, fetchReplies } from 'helpers/api'
 
 const FETCHING_REPLIES = 'FETCHING_REPLIES'
 const FETCHING_REPLIES_ERROR = 'FETCHING_REPLIES_ERROR'
@@ -62,6 +62,15 @@ export function addAndHandleReply (tweetId, reply) {
       dispatch(removeReply(tweetId, replyWithId.replyId))
       dispatch(addReplyError(err))
     })
+  }
+}
+
+export function fetchAndHandleReplies (tweetId) {
+  return function (dispatch, getState) {
+    dispatch(fetchingReplies())
+    fetchReplies(tweetId)
+      .then(replies => dispatch(fetchingRepliesSuccess(tweetId, replies, Date.now())))
+      .catch(err => dispatch(fetchingRepliesError(err)))
   }
 }
 

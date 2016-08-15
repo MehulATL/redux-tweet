@@ -94,3 +94,8 @@ export function postReply (tweetId, reply) {
     replyPromise
   }
 }
+
+export function fetchReplies (tweetId) {
+  return ref.child(`replies/${tweetId}`).once('value')
+    .then(snapshot => snapshot.val() || {})
+}
