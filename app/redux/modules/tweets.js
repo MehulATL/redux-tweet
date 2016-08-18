@@ -1,3 +1,4 @@
+import { Map } from 'immutable'
 import { saveTweet, fetchTweet } from 'helpers/api'
 import { closeModal } from './modal'
 import { addSingleUsersTweet } from './usersTweets'
@@ -74,43 +75,36 @@ export function fetchAndHandleTweet (tweetId) {
   }
 }
 
-const initialState = {
+const initialState = Map({
   isFetching: true,
   error: ''
-}
+})
 
 export default function tweets (state = initialState, action) {
   switch (action.type) {
     case FETCHING_TWEET :
-      return {
-        ...state,
+      return state.merge({
         isFetching: true
-      }
+      })
     case ADD_TWEET :
     case FETCHING_TWEET_SUCCESS :
-      return {
-        ...state,
+      return state.merge({
         error: '',
         isFetching: false,
         [action.tweet.tweetId]: action.tweet
-      }
+      })
     case FETCHING_TWEET_ERROR :
-      return {
-        ...state,
+      return state({
         isFetching: false,
         error: action.error
-      }
+      })
     case STOP_FETCHING :
-      return {
-        ...state,
+      return state.merge({
         error: '',
         isFetching: false
-      }
+      })
     case ADD_MULTIPLE_TWEETS :
-      return {
-        ...state,
-        ...action.tweets
-      }
+      return state.merge(action.tweets)
     default :
       return state
   }

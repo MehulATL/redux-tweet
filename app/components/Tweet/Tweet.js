@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react'
+import { Map } from 'immutable'
 import { formatTimestamp } from 'helpers/utils'
 import Reply from 'react-icons/lib/fa/mail-reply'
 import Star from 'react-icons/lib/fa/star'
 import {
   tweetContainer, contentContainer, avatar, actionContainer,
-  header, text, likeReplyContainer, icon, likedIcon, author,
+  header, text, likeReplyContainer, icon, likedIcon, author
 } from './styles.css'
 
 const Tweet = (props) => {
@@ -15,19 +16,19 @@ const Tweet = (props) => {
       className={tweetContainer}
       style={{cursor: props.hideReplyBtn ? 'default' : 'pointer'}}
       onClick={props.onClick}>
-      <img src={props.tweet.avatar} className={avatar} />
+      <img src={props.tweet.get('avatar')} className={avatar} />
       <div className={contentContainer}>
         <div className={header}>
-          <div onClick={props.goToProfile} className={author}>{props.tweet.name}</div>
-          <div>{formatTimestamp(props.tweet.timestamp)}</div>
+          <div onClick={props.goToProfile} className={author}>{props.tweet.get('name')}</div>
+          <div>{formatTimestamp(props.tweet.get('timestamp'))}</div>
         </div>
-        <div className={text}>{props.tweet.text}</div>
+        <div className={text}>{props.tweet.get('text')}</div>
           <div className={likeReplyContainer}>
             {props.hideReplyBtn
               ? null
               : <Reply className={icon} />}
             <div className={actionContainer}>
-              <Star className={starIcon} onClick={(e) => starFn(props.tweet.tweetId, e)} />
+              <Star className={starIcon} onClick={(e) => starFn(props.tweet.get('tweetId'), e)} />
               {props.hideLikeCount ? null : <div>{props.numberOfLikes}</div>}
             </div>
           </div>
@@ -37,14 +38,7 @@ const Tweet = (props) => {
 }
 
 Tweet.propTypes = {
-  tweet: PropTypes.shape({
-    avatar: PropTypes.string.isRequired,
-    tweetId: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    timestamp: PropTypes.number.isRequired,
-    uid: PropTypes.string.isRequired
-  }),
+  tweet: PropTypes.instanceOf(Map),
   onClick: PropTypes.func,
   isLiked: PropTypes.bool.isRequired,
   addAndHandleLike: PropTypes.func.isRequired,

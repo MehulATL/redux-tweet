@@ -27,11 +27,11 @@ const TweetContainer = React.createClass({
   },
   goToProfile (e) {
     e.stopPropagation()
-    this.context.router.push('/' + this.props.tweet.uid)
+    this.context.router.push('/' + this.props.tweet.get('uid'))
   },
   handleClick (e) {
     e.stopPropagation()
-    this.context.router.push('/tweetDetail/' + this.props.tweet.tweetId)
+    this.context.router.push('/tweetDetail/' + this.props.tweet.get('tweetId'))
   },
   render () {
     return (
@@ -46,7 +46,7 @@ const TweetContainer = React.createClass({
 
 function mapStateToProps ({tweets, likeCount, usersLikes}, props) {
   return {
-    tweet: tweets[props.tweetId],
+    tweet: tweets.get(props.tweetId),
     hideLikeCount: props.hideLikeCount,
     hideReplyBtn: props.hideReplyBtn,
     isLiked: usersLikes[props.tweetId] === true,

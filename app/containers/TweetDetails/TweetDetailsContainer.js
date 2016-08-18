@@ -40,11 +40,11 @@ const TweetDetailsContainer = React.createClass({
 
 function mapStateToProps ({tweets, likeCount, users}, props) {
   return {
-    isFetching: tweets.isFetching || likeCount.isFetching,
-    error: tweets.error,
+    isFetching: tweets.get('isFetching') || likeCount.isFetching,
+    error: tweets.get('error'),
     authedUser: users[users.authedId].info,
     tweetId: props.routeParams.tweetId,
-    tweetAlreadyFetched: !!tweets[props.routeParams.tweetId]
+    tweetAlreadyFetched: !!tweets.get(props.routeParams.tweetId)
   }
 }
 
