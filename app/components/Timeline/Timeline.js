@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { List } from 'immutable'
 import { newTweetContainer, header } from './styles.css'
 import { TweetContainer } from 'containers'
 import { errorMsg } from 'sharedStyles/styles.css'
@@ -16,7 +17,7 @@ function NewTweetsAvailable ({handleClick}) {
 }
 
 Timeline.propTypes = {
-  tweetIds: PropTypes.array.isRequired,
+  tweetIds: PropTypes.instanceOf(List),
   error: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   newTweetsAvailable: PropTypes.bool.isRequired,
@@ -28,7 +29,7 @@ export default function Timeline (props) {
     ? <h1 className={header}>{'Fetching'}</h1>
     : <div>
         {props.newTweetsAvailable ? <NewTweetsAvailable handleClick={props.resetNewTweetsAvailable} /> : null}
-        {props.tweetIds.length === 0
+        {props.tweetIds.size === 0
             ? <p className={header}>{'This is unfortunate.'} <br /> {'It appears there are no tweets yet 😞'}</p>
             : null}
         {props.tweetIds.map((id) => (

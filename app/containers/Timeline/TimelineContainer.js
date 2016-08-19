@@ -1,12 +1,13 @@
 import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { List } from 'immutable'
 import { Timeline } from 'components'
 import * as timelineActionCreators from 'redux/modules/timeline'
 
 const TimelineContainer = React.createClass({
   propTypes: {
-    tweetIds: PropTypes.array.isRequired,
+    tweetIds: PropTypes.instanceOf(List),
     newTweetsAvailable: PropTypes.bool.isRequired,
     error: PropTypes.string.isRequired,
     isFetching: PropTypes.bool.isRequired,
@@ -29,12 +30,11 @@ const TimelineContainer = React.createClass({
 })
 
 function mapStateToProps ({timeline}) {
-  const { newTweetsAvailable, error, isFetching, tweetIds } = timeline
   return {
-    newTweetsAvailable,
-    error,
-    isFetching,
-    tweetIds
+    newTweetsAvailable: timeline.get('newTweetsAvailable'),
+    error: timeline.get('error'),
+    isFetching: timeline.get('isFetching'),
+    tweetIds: timeline.get('tweetIds')
   }
 }
 

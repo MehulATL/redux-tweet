@@ -1,3 +1,4 @@
+import { fromJS } from 'immutable'
 import { addListener } from 'redux/modules/listeners'
 import { listenToTimeline } from 'helpers/api'
 import { addMultipleTweets } from 'redux/modules/tweets'
@@ -60,48 +61,43 @@ export function setAndHandleTimelineListener () {
   }
 }
 
-const initialState = {
+const initialState = fromJS({
   newTweetsAvailable: false,
   newTweetsToAdd: [],
   isFetching: false,
   error: '',
   tweetIds: []
-}
+})
 
 export default function timeline (state = initialState, action) {
   switch (action.type) {
     case SETTING_TIMELINE_LISTENER :
-      return {
-        ...state,
+      return state.merge({
         isFetching: true
-      }
+      })
     case SETTING_TIMELINE_LISTENER_ERROR :
-      return {
-        ...state,
+      return state.merge({
         isFetching: false,
         error: action.error
-      }
+      })
     case SETTING_TIMELINE_LISTENER_SUCCESS :
-      return {
-        ...state,
+      return state.merge({
         isFetching: false,
         error: '',
         tweetIds: action.tweetIds,
         newTweetsAvailable: false
-      }
+      })
     case ADD_NEW_TWEET_ID_TO_TIMELINE :
-      return {
-        ...state,
-        newTweetsToAdd: [action.tweetId, ...state.newTweetsToAdd],
+      return state.merge({
+        newTweetsToAdd: state.get('newTweetsToAdd').unshift(action.tweetId),
         newTweetsAvailable: true
-      }
+      })
     case RESET_NEW_TWEETS_AVAILABLE :
-      return {
-        ...state,
-        tweetIds: [...state.newTweetsToAdd, ...state.tweetIds],
+      return state.merge({
+        tweetIds: state.get('newTweetsToAdd').concat(state.get('tweetIds')),
         newTweetsToAdd: [],
         newTweetsAvailable: false
-      }
+      })
     default :
       return state
   }
